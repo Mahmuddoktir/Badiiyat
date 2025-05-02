@@ -1,7 +1,9 @@
+import AuthorHome from "./component/AuthorsHome/AuthorHome";
+
 const App = () => {
   return (
     <>
-      <h1 className="text-primary">Badiyat</h1>
+      <AuthorHome />
     </>
   );
 };
