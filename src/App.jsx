@@ -1,12 +1,14 @@
-import AuthorHome from "./component/AuthorHome/AuthorHome";
-import AuthorDetail from "./component/AuthorDetail/AuthorDetail";
+import Navbar from "./component/AuthorHome/Navbar";
+import Banner from "./component/AuthorHome/Banner";
+import MainCategory from "./component/AuthorHome/MainCategory";
 
 const App = () => {
   return (
-    <>
-      <AuthorHome />
-      <AuthorDetail />
-    </>
+    <div>
+      <Navbar />
+      <Banner />
+      <MainCategory />
+    </div>
   );
 };
 
