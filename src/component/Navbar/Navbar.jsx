@@ -1,7 +1,3 @@
-// images
-import LogoImg from "../../assets/Navbar/logo-sircle.png";
-import LogoText from "../../../public/font.svg";
-
 // icons
 import { IoChevronDown } from "react-icons/io5";
 
@@ -16,7 +12,9 @@ const Navbar = () => {
         <div className="flex justify-between items-center py-4 px-5 ">
           {/* logo content */}
           <div>
-            <img className="w-[150px]" src={LogoText} alt="" />
+            <p className="uppercase text-brandYellow/70 text-4xl font-bold">
+              Badiiyat
+            </p>
           </div>
           {/* Nav links */}
           <div className="">
@@ -31,11 +29,7 @@ const Navbar = () => {
           </div>
           {/* logo img */}
           <div className="flex">
-            <img
-              className="w-[70px] h-[70px] rounded-full "
-              src={LogoImg}
-              alt=""
-            />
+            <img className="w-[70px] h-[70px] rounded-full " alt="" />
             <IoChevronDown className="mt-5 text-3xl hover:text-brandBlue cursor-pointer" />
           </div>
         </div>

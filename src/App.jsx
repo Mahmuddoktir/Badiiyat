@@ -1,15 +1,16 @@
-import Navbar from "./component/AuthorHome/Navbar";
-import Banner from "./component/AuthorHome/Banner";
-import MainCategory from "./component/AuthorHome/MainCategory";
+import { Routes, Route } from "react-router-dom";
+import AddUser from "./component/AuthorHome/AddUser";
+import Dashboard from "./component/Dashboard"; // bu yangi komponent
+import LoginUser from "./component/AuthorHome/Login";
 
-const App = () => {
+function App() {
   return (
-    <div>
-      <Navbar />
-      <Banner />
-      <MainCategory />
-    </div>
+    <Routes>
+      <Route path="/" element={<AddUser />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/login" element={<LoginUser />} /> 🔧 SHU MUHIM
+    </Routes>
   );
-};
+}
 
 export default App;
