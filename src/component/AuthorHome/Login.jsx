@@ -1,93 +1,81 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // 🔑 navigate uchun
+import { useNavigate } from "react-router-dom";
 
-const LoginUser = ({ onLogin }) => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+const Login = ({ onLogin }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate(); // 🔁 navigate hook
+  const navigate = useNavigate(); // 🧭 Sahifa yo‘naltirish uchun
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
 
     try {
       const response = await axios.post(
         "https://kutubxona-83v1.onrender.com/login",
         {
-          email: form.email,
-          password: form.password,
+          email,
+          password,
         }
       );
 
       const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      onLogin(user);
 
-      if (token) {
-        localStorage.setItem("token", token);
-        alert("Logged in successfully!");
-
-        if (onLogin) onLogin(user);
-
-        navigate("/dashboard"); // 🔀 Dashboard sahifasiga yo‘naltirish
+      setLoading(false);
+      navigate("/dashboard"); // ✅ Login muvaffaqiyatli bo‘lsa Dashboard sahifasiga yo‘naltirish
+    } catch (err) {
+      setLoading(false);
+      console.log("Xatolik to‘liq:", err); // 🌐 Asosiy log
+      if (err.response) {
+        console.log("Status:", err.response.status);
+        console.log("Ma'lumot:", err.response.data);
+      } else if (err.request) {
+        console.log("So‘rov yuborildi, javob yo‘q:", err.request);
+      } else {
+        console.log("Xatolik:", err.message);
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      alert(error?.response?.data?.message || "Login failed!");
+      setError("Login xatoligi");
     }
   };
 
   return (
-    <div className="modal-wrapper">
-      <div className="text-center justify-center items-center">
-        <div className="flex items-center">
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col gap-4 border bg-gray-50 h-[500px] w-[40%]"
-          >
-            <label className="text-center mt-5">
-              <h2 className="text-2xl font-bold">Login</h2>
-              <span className="mt-4">Email:</span>
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, email: e.target.value }))
-                }
-                required
-                placeholder="Email"
-                className="pl-5 ml-2 w-[330px] h-[48px] rounded-md border border-gray-400"
-              />
-            </label>
-
-            <label>
-              <span>Password:</span>
-              <input
-                type="password"
-                value={form.password}
-                onChange={(e) =>
-                  setForm((prev) => ({ ...prev, password: e.target.value }))
-                }
-                required
-                placeholder="Password"
-                className="pl-5 ml-2 w-[330px] h-[48px] rounded-md border border-gray-400"
-              />
-            </label>
-
-            <div className="flex justify-center items-center">
-              <button
-                type="submit"
-                className="w-[328px] h-[46px] rounded-md bg-brandBlue/90 hover:bg-brandBlue/70 text-white"
-              >
-                Login
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
+      <h2 className="text-2xl font-bold mb-4">Tizimga kirish</h2>
+      <form onSubmit={handleLogin} className="space-y-4">
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
+        <input
+          type="password"
+          placeholder="Parol"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full border px-3 py-2 rounded"
+          required
+        />
+        <button
+          type="submit"
+          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+          disabled={loading}
+        >
+          {loading ? "Kirishda..." : "Kirish"}
+        </button>
+      </form>
+      {error && <p className="text-red-500 mt-4">{error}</p>}
     </div>
   );
 };
 
-export default LoginUser;
+export default Login;

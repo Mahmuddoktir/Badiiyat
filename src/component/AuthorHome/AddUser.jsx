@@ -17,7 +17,7 @@ const AddUser = () => {
     e.preventDefault();
 
     const userData = {
-      username: user.username, // server `username` deb kutyapti
+      username: user.username,
       email: user.email,
       password: user.password,
     };
@@ -30,17 +30,24 @@ const AddUser = () => {
 
       console.log("User registered successfully:", response.data);
 
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        console.log("Token saved:", response.data.token);
+      const token = response.data.token;
+
+      if (token) {
+        // Token bor bo‘lsa, localStorage'ga yozib, dashboardga yo‘naltiramiz
+        localStorage.setItem("token", token);
+        console.log("Token saved:", token);
+        alert("User registered and verified!");
+        navigate("/dashboard");
+      } else {
+        // Token bo‘lmasa, verify sahifasiga email bilan uzatamiz
+        alert("User registered! Please verify your email.");
+        navigate("/verify", { state: { email: user.email } });
       }
 
-      alert("User registered successfully!");
-      navigate("/dashboard"); // Successful registration then redirect to Dashboard
-
-      // Formani tozalash
+      // Formani tozalaymiz
       setUser({
-        userName: "",
+        uuidv4: uuidv4(), // yangi UUID generatsiya qilamiz
+        username: "",
         email: "",
         password: "",
       });
@@ -59,7 +66,6 @@ const AddUser = () => {
             className="flex flex-col justify-center items-center gap-6 w-full"
           >
             <h2 className="text-4xl font-extrabold mb-4">Sign up</h2>
-            <p className="text-sm mt-[-20px]"></p>
 
             <label>
               <span>Name:</span>
