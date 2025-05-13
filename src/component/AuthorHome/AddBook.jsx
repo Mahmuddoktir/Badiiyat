@@ -51,70 +51,77 @@ const AddBook = ({ onBookAdded }) => {
   };
 
   return (
-    <div className="p-4 bg-white shadow rounded mb-6">
-      <h2 className="text-xl font-bold mb-4">Kitob qo‘shish</h2>
-      <form onSubmit={handleSubmit} className="space-y-3">
+    <div className=" bg-white shadow-md rounded mb-8 pb-10 w-[450px] h-[600px]">
+      <h2 className="text-xl text-[36px] text-center  font-bold mb-4">
+        Add book
+      </h2>
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-4 pl-2 w-[330px] text-center mx-auto "
+      >
         <input
           type="text"
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-7 py-2 rounded"
         />
         <input
           type="number"
-          placeholder="pages"
+          placeholder="Pages"
           value={pages}
           onChange={(e) => setPages(e.target.value)}
           required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-7 py-2 rounded"
         />
         <input
           type="number"
-          placeholder="year"
+          placeholder="Year"
           value={year}
           onChange={(e) => setYear(e.target.value)}
           required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-7 py-2 rounded"
         />
         <input
           type="number"
-          placeholder="price"
+          placeholder="Price"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-7 py-2 rounded"
         />
         <input
           type="text"
-          placeholder="country"
+          placeholder="Country"
           value={country}
           onChange={(e) => setCountry(e.target.value)}
           required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-7 py-2 rounded"
         />
         <input
           type="text"
-          placeholder="author"
+          placeholder="Author"
           value={author}
           onChange={(e) => setAuthor(e.target.value)}
           required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-7 py-2 rounded"
         />
         <textarea
-          placeholder="description"
+          placeholder="Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          className="w-full border px-3 py-2 rounded"
+          className="w-full border px-7 py-2 rounded"
         />
-        <button
-          type="submit"
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-        >
-          Qo‘shish
-        </button>
+        <div className="text-center items-center mt-2 pt-4">
+          <button
+            type="submit"
+            className="bg-blue-950  text-white font-bold cursor-pointer  w-full py-2 rounded-lg hover:bg-green-700"
+          >
+            Create
+          </button>
+        </div>
         {message && <p className="text-sm text-center">{message}</p>}
       </form>
     </div>
